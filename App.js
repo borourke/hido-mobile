@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet 
 } from 'react-native';
-import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
 
 /* Device Screens */
 import DeviceHome from './device/DeviceHome';
@@ -17,13 +17,15 @@ import ViewDeviceMedicine from './device/ViewDeviceMedicine'
 
 /* Medicine Screens */
 import MedicineHome from './medicine/MedicineHome';
-import MedicineTab from './medicine/MedicineTab'
+import MedicineTab from './medicine/MedicineTab';
 
-import ScheduleHome from './ScheduleHome';
-import HistoryHome from './HistoryHome';
+/* Schedule Screens */
+import ScheduleHome from './schedule/ScheduleHome';
+import ScheduleTab from './schedule/ScheduleTab'
 
-import ScheduleTab from './ScheduleTab'
-import HistoryTab from './HistoryTab'
+/* History Screens */
+import HistoryDay from './history/HistoryDay';
+import HistoryMonth from './history/HistoryMonth'
 
 export const DeviceStack = createStackNavigator({
   DeviceHome: { screen: DeviceHome },
@@ -47,15 +49,17 @@ export const ScheduleStack = createStackNavigator({
   initialRouteName: 'ScheduleHome'
 });
 
-export const HistoryStack = createStackNavigator({
-  HistoryHome: { screen: HistoryHome },
+export const HistoryTab = createMaterialTopTabNavigator({
+  HistoryDay: { screen: HistoryDay },
+  HistoryMonth: { screen: HistoryMonth }
 }, {
-  initialRouteName: 'HistoryHome'
-});
+  initialRouteName: 'HistoryDay',
+  tabBarPosition: 'bottom'
+})
 
 export default createBottomTabNavigator({
   Device: DeviceStack,
   Medicine: MedicineStack,
   Schedule: ScheduleStack,
-  History: HistoryStack
+  History: HistoryTab
 });

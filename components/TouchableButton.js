@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     minWidth: 200,
-    marginTop: 30
+    marginTop: 30,
+    maxHeight: 50
   }
 })
 
