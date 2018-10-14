@@ -18,9 +18,15 @@ class ViewDeviceMedicine extends Component {
   }
 
   render() {
+    const { navigation } = this.props;
+    const item = navigation.getParam('item');
+
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Info about this medicine goes here.  Yadiyada.</Text>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', margin: 30 }}>
+        <Text>Slot ID: {item.slot_id}</Text>
+        <Text>Name: {item.name}</Text>
+        <Text>Dosage: {item.dosage}</Text>
+        <Text>Description: {item.description}</Text>
         <TouchableButton text='Dispense' onPress={this._onDispensePress} />
       </View>
     );

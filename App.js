@@ -59,7 +59,6 @@ export const HistoryTab = createMaterialTopTabNavigator({
 
 export default createBottomTabNavigator({
   Device: DeviceStack,
-  Medicine: MedicineStack,
   Schedule: ScheduleStack,
   History: HistoryTab
 });

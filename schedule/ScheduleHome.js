@@ -7,34 +7,19 @@ import Accordion from 'react-native-collapsible/Accordion';
 import TouchableButton from '../components/TouchableButton';
 import AttemptingConnect from '../device/AttemptingConnect';
 
-const BACON_IPSUM =
-  'Dosage: 10 mg\n\nInstructions: Take orally twice daily at 10 mg each time.  Side effects include dizziness, nausea, upset stomach and diarhea.  Also you may die.';
-
-const CONTENT = [
-  {
-    title: 'Morning     8:30 AM',
-    content: 'Pill 1 - Dosage: 10 MG\nPill 2 - Dosage: 20 MG'
-  },
-  {
-    title: 'Afternoon     1:00 PM',
-    content: 'Pill 1 - Dosage: 10 MG\nPill 2 - Dosage: 20 MG'
-  },
-  {
-    title: 'Evening     8:00 PM',
-    content: 'Pill 1 - Dosage: 10 MG\nPill 2 - Dosage: 20 MG'
-  }
-];
-
 class ScheduleHome extends Component {
+  constructor() {
+    super();
+    this.state = {
+      dataSource: [],
+      activeSection: false,
+      collapsed: true
+    };
+  };
 
   static navigationOptions = {
     title: 'Schedule'
   }
-
-  state = {
-    activeSection: false,
-    collapsed: true
-  };
 
   _onDispensePress = () => {
     this.props.navigation.navigate('AttemptingConnect');
@@ -55,9 +40,21 @@ class ScheduleHome extends Component {
         style={[styles.header, isActive ? styles.active : styles.inactive]}
         transition="backgroundColor"
       >
-        <Text style={styles.headerText}>{section.title}</Text>
+        <Text style={styles.headerText}>{section.schedule.label + "     " + section.schedule.time}</Text>
       </Animatable.View>
     );
+  };
+
+  componentDidMount() {
+    const INDEXURL='http://localhost:3000/schedule'
+    fetch(INDEXURL)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({ dataSource: responseJson });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   renderContent(section, _, isActive) {
@@ -68,7 +65,7 @@ class ScheduleHome extends Component {
         transition="backgroundColor"
       >
         <Animatable.Text animation={isActive ? 'bounceIn' : undefined}>
-          {section.content}
+          {section.medicine.dispense_quantity.medicine_id}
         </Animatable.Text>
         <TouchableButton text='Dispense' onPress={this._onDispensePress} />
       </Animatable.View>
@@ -80,7 +77,7 @@ class ScheduleHome extends Component {
       <View style={styles.container}>
         <Accordion
           activeSection={this.state.activeSection}
-          sections={CONTENT}
+          sections={this.state.dataSource}
           touchableComponent={TouchableOpacity}
           renderHeader={this.renderHeader}
           renderContent={this.renderContent}

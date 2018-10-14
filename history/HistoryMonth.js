@@ -22,7 +22,7 @@ class HistoryMonth extends Component {
   }
 
   static navigationOptions = ({ navigation }) => ({
-    title: 'History'
+    title: 'Month'
   })
 
   render() {
@@ -31,7 +31,7 @@ class HistoryMonth extends Component {
     const GREY = '#BDBDBD';
     const BLACK = '#424242';
     const LIGHT_GREY = '#F5F5F5';
-    
+
     return (
       <View style={styles.container}>
         <View>
